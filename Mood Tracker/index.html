@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mood Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="title">
+      <span class="logo">🧠</span>
+      <h1 class="center-title">Mood Tracker</h1>
+    </div>
+    <div class="header-actions">
+      <button id="themeToggle" aria-label="Toggle theme" class="icon-btn" title="Toggle light/dark">
+        🌗
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Entry Form -->
+    <section class="card" aria-labelledby="entryTitle">
+      <div class="card-header">
+        <h2 id="entryTitle">Add / Update Entry</h2>
+      </div>
+      <div class="card-body">
+        <form id="entryForm" autocomplete="off">
+          <div class="grid two">
+            <div class="form-control">
+              <label for="entryDate">Date</label>
+              <input type="date" id="entryDate" required />
+            </div>
+
+            <div class="form-control">
+              <label for="moodFilter">Quick Mood (click an emoji)</label>
+              <div class="mood-picker" role="radiogroup" aria-label="Pick mood">
+                <!-- mood buttons rendered by JS (so we can keep mapping in one place) -->
+              </div>
+            </div>
+          </div>
+
+          <div class="form-control">
+            <label for="notes">Notes (optional)</label>
+            <textarea id="notes" rows="3" placeholder="What influenced your mood today?"></textarea>
+          </div>
+
+          <div class="row actions">
+            <button class="btn primary" id="saveBtn" type="submit">Save Entry</button>
+            <button class="btn ghost" id="clearFormBtn" type="button">Clear Form</button>
+          </div>
+          <p class="hint">Tip: You can update an existing date’s entry; saving the same date will overwrite it.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Filters + Stats -->
+    <section class="grid two gap">
+      <div class="card" aria-labelledby="filterTitle">
+        <div class="card-header">
+          <h2 id="filterTitle">Filter History</h2>
+        </div>
+        <div class="card-body">
+          <div class="grid two">
+            <div class="form-control">
+              <label for="fromDate">From</label>
+              <input type="date" id="fromDate" />
+            </div>
+            <div class="form-control">
+              <label for="toDate">To</label>
+              <input type="date" id="toDate" />
+            </div>
+          </div>
+          <div class="form-control">
+            <label for="moodSelect">Mood</label>
+            <select id="moodSelect">
+              <option value="all">All</option>
+            </select>
+          </div>
+          <div class="row actions">
+            <button class="btn" id="applyFiltersBtn" type="button">Apply Filters</button>
+            <button class="btn ghost" id="resetFiltersBtn" type="button">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" aria-labelledby="statsTitle">
+        <div class="card-header">
+          <h2 id="statsTitle">Stats & Trend</h2>
+        </div>
+        <div class="card-body">
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-label">7-Day Avg</div>
+              <div class="stat-value" id="avg7">—</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Current Streak</div>
+              <div class="stat-value" id="streak">0 days</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Total Entries</div>
+              <div class="stat-value" id="totalCount">0</div>
+            </div>
+          </div>
+
+          <canvas id="trendChart" height="120" aria-label="Mood trend chart" role="img"></canvas>
+          <p class="hint">Trend shows last 14 days (1=low … 5=high).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- History -->
+    <section class="card" aria-labelledby="historyTitle">
+      <div class="card-header row">
+        <h2 id="historyTitle">History</h2>
+        <div class="row actions wrap">
+          <label class="btn ghost file-label">
+            Import JSON
+            <input type="file" id="importFile" accept="application/json" hidden />
+          </label>
+          <button class="btn" id="exportBtn" type="button">Export JSON</button>
+          <button class="btn danger" id="clearAllBtn" type="button">Clear All</button>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div id="historyList" class="history-list"></div>
+        <p id="emptyState" class="empty">No entries yet. Add your first mood above!</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    Built with ❤️ using HTML, CSS & JavaScript By Gourab Ghosh
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
